@@ -1,0 +1,5 @@
+quicksort =
+    [] => []
+    [x, ...Xs] => quicksort Ys ,, [x] ,, quicksort Zs
+        Ys = Xs .<= x
+        Zs = Xs .> x
