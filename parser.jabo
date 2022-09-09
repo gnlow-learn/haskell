@@ -1,0 +1,31 @@
+Parser A: String => [(a, String)]
+
+failure: Parser A =
+    xs => []
+
+return: A => Parser A =
+    v => xs => [(v, xs)]
+
+item: Parser Char =
+    [] => []
+    [x, ...xs] => [(x, xs)]
+
+link p q =
+    xs => p xs.
+        [] => parse q xs
+        [(y, ys)] => [(y, ys)]
+
+parse p xs = p xs
+
+bind: Parser A => (A => Parser B) => Parser B =
+bind
+    ;
+        p: Parser A
+        q: A => Parser b
+    =
+        xs => p xs.
+            [] => []
+            [(y, ys)] => parse(q y) ys
+
+parseTwice: Parser (Char, Char) =
+    item.bind(x => return(x, x))
